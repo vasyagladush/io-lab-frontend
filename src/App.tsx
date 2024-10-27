@@ -1,18 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { NotificationContainer } from "./components/notification/NotificationContainer";
+import { UserContextProvider } from "./contexts/UserContextProvider";
+import { Outlet } from "react-router-dom";
+import flowbiteTheme from "./flowbite-theme";
+import { Flowbite } from "flowbite-react";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    </>
-  )
+    <div className="App">
+      <UserContextProvider>
+        <Flowbite theme={{ theme: flowbiteTheme }}>
+          <>
+            {/* <ThemeProvider theme={defaultTheme}> */}
+            {/* <ModalManager>
+                <DialogManager> */}
+            <Outlet />
+            {/* </DialogManager>
+              </ModalManager> */}
+            <NotificationContainer />
+            {/* </ThemeProvider> */}
+          </>
+        </Flowbite>
+      </UserContextProvider>
+    </div>
+  );
 }
 
-export default App
+export default App;
