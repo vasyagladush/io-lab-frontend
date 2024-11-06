@@ -1,4 +1,4 @@
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 // import { lazy } from "react";
 import { SuspenseLoader } from "../../../components/suspense-loader/SuspenseLoader";
 import { Button } from "flowbite-react";
@@ -29,14 +29,8 @@ const InventoryModule = () => {
     // <TableContextProvider>
     <Routes>
       <Route
-        path="/*"
-        element={
-          <SuspenseLoader>
-            <p>ADMIN</p>
-            <Button>ads</Button>
-            {/* <AccessPointsModule /> */}
-          </SuspenseLoader>
-        }
+        path="/"
+        element={<Navigate to={"surveys"} />}
       />
       <Route
         path="/surveys/add"

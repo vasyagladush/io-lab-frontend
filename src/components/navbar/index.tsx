@@ -1,5 +1,5 @@
-import { ReactNode } from "react";
-import { useNavigate } from "react-router-dom";
+import { ReactNode, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { NavigationAppRoutes } from "../../constants/navigation-routes";
 import { useUserContext } from "../../contexts/UserContextProvider";
 import { SignOut } from "../icons";
@@ -9,6 +9,9 @@ import { BurgerMenu } from "./burger-menu/BurgerMenu";
 import { BurgerMenuItem } from "./burger-menu/BurgerMenuItem";
 import Api from "../../utils/api";
 import { Button } from "flowbite-react";
+import { useAdminAccessCheck } from "../../modules/private/hooks/useAdminAccessCheck";
+import { use } from "framer-motion/client";
+import { useGetUser } from "../../hooks/useGetUser";
 
 const Wrapper = ({ children }: { children: ReactNode }) => (
   <div className="fixed top-0 left-0 w-[calc(100vw-50px)] z-30 flex items-center h-26 bg-white shadow-md p-6">
@@ -34,9 +37,17 @@ const SignOutIcon = () => <SignOut className="transform scale-70" />;
 
 const Navbar: React.FunctionComponent = () => {
   const navigate = useNavigate();
-  const { clearUser, user, setUser } = useUserContext();
-  // const { checkAdminAccess } = useAdminAccessCheck();
+  const { clearUser } = useUserContext();
+  const { checkAdminAccess } = useAdminAccessCheck();
+  const [isAdmin, setIsAdmin] = useState(false);
+  const location = useLocation();
 
+  useEffect(() => {
+    console.log(isAdmin);
+    checkAdminAccess().then((res) => {
+      setIsAdmin(res ?? false);
+    });
+  }, []);
   // const settingsNavigate = () => {
   //   navigate(NavigationAppRoutes.Private.Settings.USERS);
   // };
@@ -107,9 +118,53 @@ const Navbar: React.FunctionComponent = () => {
 
   return (
     <div className="fixed top-4 right-4">
-      <Button color="failure" onClick={handleLogOut}>
-        Log Out
-      </Button>
+      <div className="flex justify-center space-x-4">
+        {isAdmin ? (
+          location.pathname.includes("admin") ? (
+            <Button
+              color="green"
+              onClick={() =>
+                navigate(NavigationAppRoutes.Private.Surveys.INDEX)
+              }
+            >
+              Grade surveys
+            </Button>
+          ) : (
+            <Button
+              color="blue"
+              onClick={() => navigate(NavigationAppRoutes.Private.Admin.INDEX)}
+            >
+              Admin panel
+            </Button>
+          )
+        ) : null}
+
+        {isAdmin ? (
+          location.pathname.includes("admin") &&
+          location.pathname.includes("admin/surveys/add") ? (
+            <Button
+              color="blue"
+              onClick={() =>
+                navigate(NavigationAppRoutes.Private.Admin.Surveys.INDEX)
+              }
+            >
+              Surveys list
+            </Button>
+          ) : (
+            <Button
+              color="blue"
+              onClick={() =>
+                navigate(NavigationAppRoutes.Private.Admin.Surveys.CREATE)
+              }
+            >
+              Create a survey
+            </Button>
+          )
+        ) : null}
+        <Button color="failure" onClick={handleLogOut}>
+          Log Out
+        </Button>
+      </div>
     </div>
   );
 };

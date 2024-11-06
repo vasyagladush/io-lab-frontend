@@ -9,7 +9,7 @@ export namespace NavigationAppRoutes {
       export const INDEX = "/private/admin";
       export enum Surveys {
         INDEX = "/private/admin/surveys",
-        CREATE = "/private/admin/surveys/create",
+        CREATE = "/private/admin/surveys/add",
       }
     }
 

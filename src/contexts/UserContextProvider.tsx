@@ -15,6 +15,7 @@ interface IUserContext {
   setUser: (data: UserApiType) => void;
   clearUser: () => void;
   refreshUserData: () => void;
+  loading: boolean;
 }
 
 const UserContext = createContext<IUserContext>({
@@ -22,6 +23,7 @@ const UserContext = createContext<IUserContext>({
   setUser: () => null,
   clearUser: () => null,
   refreshUserData: () => null,
+  loading: false,
 });
 
 export const UserContextProvider: FC<{ children: ReactElement }> = ({
@@ -29,10 +31,20 @@ export const UserContextProvider: FC<{ children: ReactElement }> = ({
 }) => {
   const { userData: user, refreshUserData, getUser } = useGetUser();
   const [userData, setUserData] = useState<UserApiType | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleUserGet = async () =>{
-    return userData ?  userData : await getUser();
-  }
+  const handleUserGet = async () => {
+    let result;
+    if (userData) {
+      result = userData;
+    } else {
+      setLoading(true);
+      result = await getUser();
+      setLoading(false);
+    }
+
+    return result;
+  };
 
   const handleUserUpdate = (data: UserApiType) => {
     setUserData(data);
@@ -53,6 +65,7 @@ export const UserContextProvider: FC<{ children: ReactElement }> = ({
         setUser: handleUserUpdate,
         clearUser: handleUserClear,
         refreshUserData,
+        loading,
       }}
     >
       {children}

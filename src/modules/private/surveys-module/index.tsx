@@ -14,11 +14,7 @@ const InventoryModule = () => {
           path="/*"
           element={
             <SuspenseLoader>
-              <p>SURVEYS</p>
-              <SurveysList>
-                
-              </SurveysList>
-              {/* <AccessPointsModule /> */}
+              <SurveysList />
             </SuspenseLoader>
           }
         />
