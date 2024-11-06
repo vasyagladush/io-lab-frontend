@@ -17,7 +17,7 @@ export const useGetSurveys = () => {
     let result: components["schemas"]["SurveyPlusSchema"][];
     setLoading(true);
     try {
-      result = await api.getSurveys();
+      result = await api.getCurrentSurveys();
     } catch (e: any) {
       setLoading(false);
       showNotification("Failed to fetch surveys", NotificationTypes.DANGER);

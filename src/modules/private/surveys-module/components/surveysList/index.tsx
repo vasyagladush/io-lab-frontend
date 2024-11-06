@@ -22,7 +22,7 @@ const SurveysList = () => {
   const { showNotification } = useNotification();
   const [selectedRating, setSelectedRating] = useState({});
   const handleVote = (surveyId: number, rating: number) => {
-    setSelectedRating((prev) => ({ ...prev, [surveyId]: rating }));
+    setSelectedRating((prev) => ({ ...prev, [surveyId.toString()]: rating }));
     console.log(`Oddano głos: ${rating} dla głosowania ID ${surveyId}`);
   };
 
@@ -49,10 +49,16 @@ const SurveysList = () => {
               </div>
             </div>
             <div className="flex justify-center gap-2 mt-4">
-                
+              {[1, 2, 3, 4, 5].map((rating) => (
+                <button
+                  key={rating}
+                  onClick={() => handleVote(survey.id, rating)}
+                  className="px-3 py-1 rounded-full border border-gray-300"
+                >
+                  {rating}
+                </button>
+              ))}
             </div>
-
-
 
             <Button color="blue" className="mt-4 w-full">Głosuj</Button>
           </Card>
