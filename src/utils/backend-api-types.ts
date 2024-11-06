@@ -34,13 +34,33 @@ export interface paths {
   "/surveys/current": {
     get: operations["get_current_surveys_surveys_current_get"];
   };
+  "/surveys/{id}": {
+    get: operations["get_survey_surveys__id__get"];
+  };
   "/surveys/{id}/report": {
     get: operations["get_report_surveys__id__report_get"];
+  };
+  "/grades/": {
+    post: operations["create_grade_grades__post"];
   };
 }
 
 export interface components {
   schemas: {
+    /**
+     * GradeSchema
+     * @example {
+     *   "grade": 1,
+     *   "survey_id": 1,
+     *   "user_id": 1
+     * }
+     */
+    GradeSchema: {
+      /** Grade */
+      grade: number;
+      /** Surveyid */
+      surveyId: number;
+    };
     /** HTTPValidationError */
     HTTPValidationError: {
       /** Detail */
@@ -346,7 +366,7 @@ export interface operations {
   get_all_surveys_surveys__get: {
     responses: {
       /** Successful Response */
-      201: {
+      200: {
         content: {
           "application/json": components["schemas"]["SurveyPlusSchema"][];
         };
@@ -389,6 +409,27 @@ export interface operations {
       };
     };
   };
+  get_survey_surveys__id__get: {
+    parameters: {
+      path: {
+        id: unknown;
+      };
+    };
+    responses: {
+      /** Successful Response */
+      200: {
+        content: {
+          "application/json": components["schemas"]["SurveyPlusSchema"];
+        };
+      };
+      /** Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+  };
   get_report_surveys__id__report_get: {
     parameters: {
       path: {
@@ -411,6 +452,27 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["HTTPValidationError"];
         };
+      };
+    };
+  };
+  create_grade_grades__post: {
+    responses: {
+      /** Successful Response */
+      201: {
+        content: {
+          "application/json": unknown;
+        };
+      };
+      /** Validation Error */
+      422: {
+        content: {
+          "application/json": components["schemas"]["HTTPValidationError"];
+        };
+      };
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["GradeSchema"];
       };
     };
   };

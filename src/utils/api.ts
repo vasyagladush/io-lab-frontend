@@ -298,6 +298,19 @@ class Api {
   //   }
   // }
 
+  async createGrade(
+    payload: components["schemas"]['GradeSchema']
+  ): Promise<components["schemas"]['GradeSchema']> {
+    const url = new URL(this.mainUrl + `grades/`);
+    const result = await this.fetcher(url.toString(), {
+      method: "POST",
+      headers: this.defaultHeaders,
+      body: JSON.stringify(payload),
+    });
+    const data = await result.json();
+    return data;
+  }
+
   async createSurvey(
     payload: components["schemas"]["SurveySchema"]
   ): Promise<components["schemas"]["SurveyPlusSchema"]> {

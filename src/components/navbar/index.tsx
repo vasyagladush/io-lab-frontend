@@ -140,8 +140,9 @@ const Navbar: React.FunctionComponent = () => {
         ) : null}
 
         {isAdmin ? (
-          location.pathname.includes("admin") &&
-          location.pathname.includes("admin/surveys/add") ? (
+          location.pathname.includes("admin/surveys") &&
+          !location.pathname.endsWith("admin/surveys/") &&
+          !location.pathname.endsWith("admin/surveys") ? (
             <Button
               color="blue"
               onClick={() =>

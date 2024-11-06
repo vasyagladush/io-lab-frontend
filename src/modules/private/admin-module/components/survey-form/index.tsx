@@ -69,7 +69,7 @@ const SurveyForm: FC<{ isCreating?: boolean }> = ({ isCreating = false }) => {
         onChange={(e) => setVoteName(e.target.value)}
       />
 
-      <Label>Od:</Label>
+      <Label color="info">Od:</Label>
       <TextInput
         disabled={!isCreating}
         type="datetime-local"
@@ -78,7 +78,7 @@ const SurveyForm: FC<{ isCreating?: boolean }> = ({ isCreating = false }) => {
         onChange={(e) => setStartTime(e.target.value)}
       />
 
-      <Label>Do:</Label>
+      <Label color="info">Do:</Label>
       <TextInput
         disabled={!isCreating}
         type="datetime-local"

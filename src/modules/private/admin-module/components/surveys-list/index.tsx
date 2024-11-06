@@ -14,8 +14,6 @@ const SurveysList = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="center text-xl font bold text-black-900">
-        Głosowania
         {surveysData.map((survey) => {
           return (
             <Card
@@ -25,7 +23,7 @@ const SurveysList = () => {
                 );
               }}
               key={survey.id}
-              className="cursor-pointer p-4 border border-gray-200 rounded-lg shadow-md"
+              className="cursor-pointer p-4 border border-gray-200 rounded-lg shadow-md mb-1"
             >
               <h3 className="text-xl font-semibold text-gray-800">
                 {survey.title}
@@ -45,7 +43,6 @@ const SurveysList = () => {
             </Card>
           );
         })}
-      </h2>
     </div>
   );
 };
