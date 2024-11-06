@@ -6,6 +6,7 @@ import { useAdminAccessCheck } from "../hooks/useAdminAccessCheck";
 import { NavigationAppRoutes } from "../../../constants/navigation-routes";
 import { useEffect } from "react";
 import SurveysAdd from "./components/surveys-add";
+import SurveysList from "./components/surveys-list";
 // import { TableContextProvider } from "../../../components/ui-kit/ReactTable/context/TableContext";
 
 // const AccessPointsModule = lazy(async () => await import("./surveys"));
@@ -44,6 +45,16 @@ const InventoryModule = () => {
             <SurveysAdd>
               
             </SurveysAdd>
+          </SuspenseLoader>
+        }
+      />
+      <Route
+        path="/surveys"
+        element={
+          <SuspenseLoader>
+            <SurveysList>
+              
+            </SurveysList>
           </SuspenseLoader>
         }
       />

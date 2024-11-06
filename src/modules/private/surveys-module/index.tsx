@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 // import { lazy } from "react";
 import { SuspenseLoader } from "../../../components/suspense-loader/SuspenseLoader";
+import SurveysList from "./components/surveysList";
 // import { TableContextProvider } from "../../../components/ui-kit/ReactTable/context/TableContext";
 
 // const AccessPointsModule = lazy(async () => await import("./surveys"));
@@ -14,6 +15,9 @@ const InventoryModule = () => {
           element={
             <SuspenseLoader>
               <p>SURVEYS</p>
+              <SurveysList>
+                
+              </SurveysList>
               {/* <AccessPointsModule /> */}
             </SuspenseLoader>
           }
