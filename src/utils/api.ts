@@ -79,16 +79,6 @@ class Api {
     return data;
   }
 
-  // async getUsers(): Promise<components["schemas"]["UserPlusSchema"][]> {
-  //   const url = new URL(this.mainUrl + "users/all");
-  //   const result = await this.fetcher(url.toString(), {
-  //     method: "GET",
-  //     headers: this.defaultHeaders,
-  //   });
-  //   const data = await result.json();
-  //   return data;
-  // }
-
   // async getUser(
   //   id: string | number
   // ): Promise<components["schemas"]["UserPlusSchema"] | undefined> {
@@ -307,6 +297,39 @@ class Api {
   //     throw e;
   //   }
   // }
+
+  async createSurvey(
+    payload: components["schemas"]["SurveySchema"]
+  ): Promise<components["schemas"]["SurveyPlusSchema"]> {
+    const url = new URL(this.mainUrl + `surveys/`);
+    const result = await this.fetcher(url.toString(), {
+      method: "POST",
+      headers: this.defaultHeaders,
+      body: JSON.stringify(payload),
+    });
+    const data = await result.json();
+    return data;
+  }
+
+  async getSurveys(): Promise<components["schemas"]["SurveyPlusSchema"][]> {
+    const url = new URL(this.mainUrl + "surveys/");
+    const result = await this.fetcher(url.toString(), {
+      method: "GET",
+      headers: this.defaultHeaders,
+    });
+    const data = await result.json();
+    return data;
+  }
+
+  async getCurrentSurveys(): Promise<components["schemas"]["SurveyPlusSchema"][]> {
+    const url = new URL(this.mainUrl + "surveys/current");
+    const result = await this.fetcher(url.toString(), {
+      method: "GET",
+      headers: this.defaultHeaders,
+    });
+    const data = await result.json();
+    return data;
+  }
 }
 
 export default new Api(apiUrl);

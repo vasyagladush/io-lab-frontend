@@ -79,7 +79,9 @@ export const PrivateLayout = () => {
     <>
       <LoadingBlock loading={loading}>
         <Navbar />
-        <Outlet />
+        <div className="mt-24 flex justify-center items-center">
+          <Outlet />
+        </div>
       </LoadingBlock>
     </>
   );

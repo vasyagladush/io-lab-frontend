@@ -5,7 +5,7 @@ import { Button } from "flowbite-react";
 import { useAdminAccessCheck } from "../hooks/useAdminAccessCheck";
 import { NavigationAppRoutes } from "../../../constants/navigation-routes";
 import { useEffect } from "react";
-import SurveysAdd from "./components/SurveysAdd";
+import SurveysAdd from "./components/surveys-add";
 // import { TableContextProvider } from "../../../components/ui-kit/ReactTable/context/TableContext";
 
 // const AccessPointsModule = lazy(async () => await import("./surveys"));

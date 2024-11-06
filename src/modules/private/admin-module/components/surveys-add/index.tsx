@@ -1,17 +1,40 @@
 // AdminVotingTemplate.js
 import { Button, TextInput, Select, Label, Textarea } from "flowbite-react";
 import { useState } from "react";
+import { useCreateSurvey } from "../hooks/useCreateSurvey";
+import {
+  NotificationTypes,
+  useNotification,
+} from "../../../../../hooks/useNotification";
+import { Spinner } from "../../../../../components/ui-kit";
 
 const SurveysAdd = () => {
   const [voteName, setVoteName] = useState("");
-  const [startTime, setStartTime] = useState(new Date().toISOString().slice(0, 16));
+  const [startTime, setStartTime] = useState(
+    new Date().toISOString().slice(0, 16)
+  );
   const [endTime, setEndTime] = useState(new Date().toISOString().slice(0, 16));
   const [description, setDescription] = useState("");
   const [scale, setScale] = useState("1-5");
 
-  const handleSubmit = () => {
-    /// jakbys mogl mi Vasyl pomoc tutaj z routami zeby to dobrze poszlo na backend to bylbym wdzieczny
-    console.log({ voteName, startTime, endTime, description, scale });
+  const { createSurvey, loading } = useCreateSurvey();
+  const { showNotification } = useNotification();
+
+  const handleSubmit = async () => {
+    const res = await createSurvey({
+      title: voteName,
+      startAt: startTime,
+      finishesAt: endTime,
+      body: description,
+    });
+
+    if (!res)
+      showNotification("Failed to create a survey", NotificationTypes.DANGER);
+    else
+      showNotification(
+        "Survey successfully created",
+        NotificationTypes.SUCCESS
+      );
   };
 
   return (
@@ -45,16 +68,13 @@ const SurveysAdd = () => {
       />
 
       <Label>Wybierz skalę:</Label>
-      <Select
-        value={scale}
-        onChange={(e) => setScale(e.target.value)}
-      >
+      <Select value={scale} onChange={(e) => setScale(e.target.value)}>
         <option value="1-5">Od 1 do 5</option>
         <option value="0-10">Od 0 do 10</option>
         <option value="0-5">Od 0 do 5</option>
       </Select>
 
-      <Button onClick={handleSubmit}>Wyślij</Button>
+      <Button onClick={handleSubmit}>Wyślij {loading && <Spinner />}</Button>
       <Button color="gray">Pobierz raport</Button>
     </div>
   );

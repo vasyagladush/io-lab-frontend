@@ -53,4 +53,4 @@ export default tseslint.config({
 - `npm run icons:convert`
 
 ## Generate types for Backend API:
-- `npx openapi-typescript@5.4.1 http://localhost:8080/openapi.json --output src/util/backend-api-types.ts`
+- `npx openapi-typescript@5.4.1 http://localhost:8080/openapi.json --output src/utils/backend-api-types.ts`
