@@ -5,8 +5,8 @@ import { Button } from "flowbite-react";
 import { useAdminAccessCheck } from "../hooks/useAdminAccessCheck";
 import { NavigationAppRoutes } from "../../../constants/navigation-routes";
 import { useEffect } from "react";
-import SurveysAdd from "./components/surveys-add";
 import SurveysList from "./components/surveys-list";
+import SurveyForm from "./components/survey-form";
 // import { TableContextProvider } from "../../../components/ui-kit/ReactTable/context/TableContext";
 
 // const AccessPointsModule = lazy(async () => await import("./surveys"));
@@ -42,9 +42,15 @@ const InventoryModule = () => {
         path="/surveys/add"
         element={
           <SuspenseLoader>
-            <SurveysAdd>
-              
-            </SurveysAdd>
+            <SurveyForm isCreating={true} />
+          </SuspenseLoader>
+        }
+      />
+      <Route
+        path="/surveys/:id"
+        element={
+          <SuspenseLoader>
+            <SurveyForm />
           </SuspenseLoader>
         }
       />
@@ -52,13 +58,10 @@ const InventoryModule = () => {
         path="/surveys"
         element={
           <SuspenseLoader>
-            <SurveysList>
-              
-            </SurveysList>
+            <SurveysList></SurveysList>
           </SuspenseLoader>
         }
       />
-
     </Routes>
     // </TableContextProvider>
   );

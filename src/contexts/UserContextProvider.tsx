@@ -61,6 +61,5 @@ export const UserContextProvider: FC<{ children: ReactElement }> = ({
 };
 
 export const useUserContext = () => {
-  console.log("context called");
   return useContext(UserContext);
 };

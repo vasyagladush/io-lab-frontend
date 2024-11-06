@@ -311,6 +311,18 @@ class Api {
     return data;
   }
 
+  async getSurvey(
+    id: string
+  ): Promise<components["schemas"]["SurveyPlusSchema"]> {
+    const url = new URL(this.mainUrl + `surveys/${id}`);
+    const result = await this.fetcher(url.toString(), {
+      method: "GET",
+      headers: this.defaultHeaders,
+    });
+    const data = await result.json();
+    return data;
+  }
+
   async getSurveys(): Promise<components["schemas"]["SurveyPlusSchema"][]> {
     const url = new URL(this.mainUrl + "surveys/");
     const result = await this.fetcher(url.toString(), {
@@ -321,7 +333,9 @@ class Api {
     return data;
   }
 
-  async getCurrentSurveys(): Promise<components["schemas"]["SurveyPlusSchema"][]> {
+  async getCurrentSurveys(): Promise<
+    components["schemas"]["SurveyPlusSchema"][]
+  > {
     const url = new URL(this.mainUrl + "surveys/current");
     const result = await this.fetcher(url.toString(), {
       method: "GET",
@@ -329,6 +343,29 @@ class Api {
     });
     const data = await result.json();
     return data;
+  }
+
+  async downloadReport(surveyId: string) {
+    const url = new URL(
+      this.mainUrl + `surveys/${surveyId}/report`
+    );
+    const response = await this.fetcher(url.toString(), {
+      method: "GET",
+      headers: this.defaultHeaders,
+    });
+
+    // Get the filename from the 'Content-Disposition' header if available
+    const contentDisposition = response.headers.get("content-disposition");
+    let fileName = "report.pdf"; // Default filename
+    if (contentDisposition) {
+      const fileNameMatch = contentDisposition.match(/filename="?(.+)"?/);
+      if (fileNameMatch?.[1]) {
+        fileName = fileNameMatch[1];
+      }
+    }
+
+    // Get the response as a blob (binary data)
+    return { fileName, blob: await response.blob() };
   }
 }
 

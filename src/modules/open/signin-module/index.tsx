@@ -41,7 +41,6 @@ const SignInModule: React.FunctionComponent = () => {
   const { checkAdminAccess } = useAdminAccessCheck();
 
   const redirectAfterLogIn = (isAdmin: boolean) => {
-    console.log("open module: redirecting");
     isAdmin
       ? navigate(NavigationAppRoutes.Private.Admin.INDEX)
       : navigate(NavigationAppRoutes.Private.Surveys.INDEX);
